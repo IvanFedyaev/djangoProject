@@ -1,3 +1,4 @@
+from django.db.models import Min, Max, Count
 from django.shortcuts import render, get_list_or_404
 from tours.models import Tour, Departure
 from random import sample
@@ -12,8 +13,10 @@ def main_view(request):
 
 
 def departure_view(request, departure):
-    tours_objects = get_list_or_404(Tour, departure__departure=departure)
-    return render(request, 'departure.html', {'tours': tours_objects})
+    tours_objects = Tour.objects.filter(departure__departure=departure)
+    tours = tours_objects.aggregate(min_price=Min('price'), max_price=Max('price'), min_nights=Min('nights'),
+                                    max_nights=Max('nights'))
+    return render(request, 'departure.html', {'tours': tours_objects, 't': tours})
 
 
 def tour_view(request, pk):

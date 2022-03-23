@@ -5,10 +5,9 @@ from .models import Tour, Departure
 # Register your models here.
 
 class TourAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'stars', 'nights', 'date')
+    list_display = ('id', 'title', 'price', 'stars', 'nights', 'date')
     list_display_links = ('id', 'title')
     search_fields = ('title', 'description')
-    list_filter =
 
 
 class DepartureAdmin(admin.ModelAdmin):
